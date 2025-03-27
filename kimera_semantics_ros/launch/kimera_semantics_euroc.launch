@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-15"?>
 <launch>
+  <arg name="robot_name"     default="acl_jackal"/>
   <arg name="voxel_size"     default="0.10"/>
   <arg name="max_ray_length_m" default="5"/>
   <param name="use_sim_time" value="true" />
@@ -18,7 +19,7 @@
   <arg name="metric_semantic_reconstruction" default="false"/>
 
   <!-- Input -->
-  <arg name="semantic_pointcloud"         default="/stereo_gray/dense_stereo/pointcloud"/>
+  <arg name="semantic_pointcloud"         default="stereo_gray/dense_stereo/pointcloud"/>
   <!-- Only used for dense stereo depth, but we do that in Kimera VIO ROS -->
   <arg name="left_cam_info_topic"         default="/cam0/camera_info"/>
   <arg name="right_cam_info_topic"        default="/cam1/camera_info"/>
@@ -29,7 +30,7 @@
   <!-- We don't use a depth topic, but a pointcloud directly -->
   <arg name="left_cam_depth_topic"        default="/dev/null"/>
   <arg name="use_freespace_pointcloud"    default="true" />
-  <arg name="freespace_pointcloud"        default="/stereo_gray/dense_stereo/freespace_pointcloud"/>
+  <arg name="freespace_pointcloud"        default="stereo_gray/dense_stereo/freespace_pointcloud"/>
 
   <!-- We don't need to run stereo depth or publish point clouds since it is done in Kimera VIO ROS already.
        So we just need to subscribe in "semantic_pointcloud" to the actual pointcloud from Kimera VIO ROS -->
@@ -41,5 +42,6 @@
   <arg name="pkg_type"    default="voxblox_ros" unless="$(arg metric_semantic_reconstruction)"/>
   <arg name="server_type" default="tsdf_server" unless="$(arg metric_semantic_reconstruction)"/>
 
-  <include file="$(find kimera_semantics_ros)/launch/kimera_semantics.launch" pass_all_args="true"/>
+  <include file="$(find kimera_semantics_ros)/launch/kimera_semantics.launch" ns="$(arg robot_name)" pass_all_args="true"/>
+  <!-- <include file="$(find kimera_semantics_ros)/launch/kimera_semantics.launch" pass_all_args="true"/> -->
 </launch>

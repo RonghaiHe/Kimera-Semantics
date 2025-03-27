@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-15"?>
 <launch>
+  <arg name="robot_name"     default="acl_jackal"/>
   <arg name="voxel_size"     default="0.05"/>
   <arg name="max_ray_length_m" default="5"/>
   <arg name="should_use_sim_time" default="true" />
